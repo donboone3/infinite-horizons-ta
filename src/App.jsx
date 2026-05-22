@@ -3,6 +3,8 @@ import logoImg from './assets/logo.png';
 import HiringCalculator from './components/HiringCalculator';
 import JobBoard from './components/JobBoard';
 import Modal from './components/Modal';
+import InteractiveNetwork from './components/InteractiveNetwork';
+
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
@@ -183,20 +185,9 @@ export default function App() {
 
           <div className="hero-visual">
             <div className="visual-backdrop"></div>
-            {/* Logo visual frame */}
-            <div className="glass-card" style={{ 
-              padding: '3rem', 
-              borderRadius: '50%', 
-              width: '320px', 
-              height: '320px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              position: 'relative',
-              zIndex: 2,
-              border: '2px solid var(--color-primary)'
-            }}>
-              <img src={logoImg} alt="Infinite Horizons TA" style={{ width: '80%', height: 'auto', objectFit: 'contain' }} />
+            {/* Interactive Network Background */}
+            <div style={{ width: '100%', position: 'relative', zIndex: 2 }}>
+              <InteractiveNetwork />
             </div>
 
             {/* Floating metrics */}
