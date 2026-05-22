@@ -3,7 +3,6 @@ import logoImg from './assets/logo.png';
 import HiringCalculator from './components/HiringCalculator';
 import JobBoard from './components/JobBoard';
 import Modal from './components/Modal';
-import InteractiveNetwork from './components/InteractiveNetwork';
 
 
 export default function App() {
@@ -21,6 +20,21 @@ export default function App() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [tallySubmitted, setTallySubmitted] = useState(false);
   const [tallyData, setTallyData] = useState({ name: '', email: '', message: '' });
+
+  // Hero contact form state
+  const [heroFormData, setHeroFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    need: 'Operations',
+    message: ''
+  });
+  const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
+
+  const handleHeroFormSubmit = (e) => {
+    e.preventDefault();
+    setHeroFormSubmitted(true);
+  };
 
   // Handle header background transition on scroll
   useEffect(() => {
@@ -142,8 +156,14 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="section container" style={{ overflow: 'visible' }}>
-        <div className="hero-wrapper">
+      <section id="home" className="section hero-section">
+        {/* Looping Background Video */}
+        <div className="hero-video-bg">
+          <video src="/hero_header.mp4" autoPlay loop muted playsInline />
+          <div className="hero-video-overlay"></div>
+        </div>
+
+        <div className="container hero-wrapper">
           <div className="hero-content">
             <div className="hero-tag">
               <span className="hero-tag-dot"></span>
@@ -185,26 +205,114 @@ export default function App() {
 
           <div className="hero-visual">
             <div className="visual-backdrop"></div>
-            {/* Interactive Network Background */}
-            <div style={{ width: '100%', position: 'relative', zIndex: 2 }}>
-              <InteractiveNetwork />
-            </div>
+            
+            {/* Premium Glassmorphic Intake Form */}
+            <div className="glass-card hero-form-card">
+              {heroFormSubmitted ? (
+                <div className="hero-form-success">
+                  <div className="success-icon-ring">
+                    <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                      <circle className="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                      <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                  </div>
+                  <h3>Intake Form Submitted!</h3>
+                  <p style={{ fontSize: '0.9rem', lineHeight: '1.5', margin: '1rem 0' }}>
+                    Thank you, <strong>{heroFormData.name}</strong>. We have received your staffing request for <strong>{heroFormData.company}</strong> regarding <strong>{heroFormData.need}</strong> roles.
+                  </p>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                    Our recruiting specialists are scanning our talent networks. We will reach out to you at <strong>{heroFormData.email}</strong> within 24 hours.
+                  </p>
+                  <button 
+                    className="btn btn-secondary btn-sm" 
+                    style={{ marginTop: '1.5rem', width: '100%' }}
+                    onClick={() => {
+                      setHeroFormData({ name: '', email: '', company: '', need: 'Operations', message: '' });
+                      setHeroFormSubmitted(false);
+                    }}
+                  >
+                    Submit Another Request
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleHeroFormSubmit}>
+                  <h3>Get Matched with Talent</h3>
+                  <p className="form-subtitle">Submit your hiring needs below and get matched with qualified professionals in 48 hours.</p>
+                  
+                  <div className="form-group" style={{ marginBottom: '1rem' }}>
+                    <label htmlFor="hero-name">Full Name</label>
+                    <input
+                      id="hero-name"
+                      type="text"
+                      required
+                      value={heroFormData.name}
+                      onChange={(e) => setHeroFormData(prev => ({ ...prev, name: e.target.value }))}
+                      className="form-input"
+                      placeholder="Jane Doe"
+                    />
+                  </div>
 
-            {/* Floating metrics */}
-            <div className="visual-float-card float-card-1">
-              <div className="float-icon">✓</div>
-              <div className="float-info">
-                <h5>Candidate Vetted</h5>
-                <p>Background & Skill Audit Done</p>
-              </div>
-            </div>
+                  <div className="form-row" style={{ marginBottom: '0' }}>
+                    <div className="form-group" style={{ marginBottom: '1rem' }}>
+                      <label htmlFor="hero-email">Business Email</label>
+                      <input
+                        id="hero-email"
+                        type="email"
+                        required
+                        value={heroFormData.email}
+                        onChange={(e) => setHeroFormData(prev => ({ ...prev, email: e.target.value }))}
+                        className="form-input"
+                        placeholder="jane@company.com"
+                      />
+                    </div>
+                    <div className="form-group" style={{ marginBottom: '1rem' }}>
+                      <label htmlFor="hero-company">Company Name</label>
+                      <input
+                        id="hero-company"
+                        type="text"
+                        required
+                        value={heroFormData.company}
+                        onChange={(e) => setHeroFormData(prev => ({ ...prev, company: e.target.value }))}
+                        className="form-input"
+                        placeholder="Acme Corp"
+                      />
+                    </div>
+                  </div>
 
-            <div className="visual-float-card float-card-2">
-              <div className="float-icon" style={{ color: 'var(--color-primary)' }}>⚡</div>
-              <div className="float-info">
-                <h5>Interview Ready</h5>
-                <p>Matched in under 48 hours</p>
-              </div>
+                  <div className="form-group" style={{ marginBottom: '1rem' }}>
+                    <label style={{ display: 'block', marginBottom: '0.5rem' }}>Talent Requirement</label>
+                    <div className="talent-need-selector">
+                      {['Operations', 'Finance', 'Admin', 'Sales'].map((role) => (
+                        <button
+                          key={role}
+                          type="button"
+                          className={`need-badge ${heroFormData.need === role ? 'active' : ''}`}
+                          onClick={() => setHeroFormData(prev => ({ ...prev, need: role }))}
+                        >
+                          {role}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+                    <label htmlFor="hero-message">Role Details (Optional)</label>
+                    <textarea
+                      id="hero-message"
+                      rows="2"
+                      value={heroFormData.message}
+                      onChange={(e) => setHeroFormData(prev => ({ ...prev, message: e.target.value }))}
+                      className="form-input"
+                      placeholder="Briefly describe the roles you need filled..."
+                      style={{ resize: 'none' }}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                    Request Candidates
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

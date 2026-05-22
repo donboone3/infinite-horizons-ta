@@ -1321,3 +1321,177 @@ p {
 .social-icon-link:hover {
   color: var(--color-primary);
 }
+
+/* ==========================================================================
+   Hero Background Video & Contact Form
+   ========================================================================== */
+
+/* Full-bleed hero section override */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+}
+
+.hero-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+  transition: opacity var(--transition-normal);
+}
+
+.light-theme .hero-video-bg video {
+  opacity: 0.08;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Blend video with application background color */
+  background: linear-gradient(
+    to bottom,
+    var(--bg-app) 0%,
+    transparent 15%,
+    transparent 85%,
+    var(--bg-app) 100%
+  ),
+  linear-gradient(
+    to right,
+    var(--bg-app) 0%,
+    rgba(var(--color-primary-rgb), 0.04) 50%,
+    var(--bg-app) 100%
+  );
+}
+
+/* Glassmorphic Hero Contact Form */
+.hero-form-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 2.25rem;
+  z-index: 2;
+  position: relative;
+  border-radius: var(--radius-lg);
+  margin-left: auto;
+}
+
+@media (max-width: 992px) {
+  .hero-form-card {
+    margin: 2rem auto 0;
+  }
+}
+
+.hero-form-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.hero-form-card p.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+/* Talent Need Selector (Premium Segmented Buttons) */
+.talent-need-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.need-badge {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.6rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  font-family: var(--font-sans);
+}
+
+.need-badge:hover {
+  border-color: var(--border-hover);
+  color: var(--text-heading);
+}
+
+.need-badge.active {
+  background-color: rgba(2, 61, 239, 0.15);
+  border-color: var(--color-primary);
+  color: #38bdf8;
+  box-shadow: 0 0 10px rgba(2, 61, 239, 0.25);
+}
+
+.light-theme .need-badge.active {
+  background-color: rgba(2, 61, 239, 0.08);
+  color: var(--color-primary);
+}
+
+/* Success animation styles */
+.hero-form-success {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.success-icon-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.checkmark {
+  width: 32px;
+  height: 32px;
+  stroke: #10b981;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  animation: checkmark-draw 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes checkmark-draw {
+  0% {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+  }
+  100% {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 0;
+  }
+}
