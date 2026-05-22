@@ -159,7 +159,7 @@ export default function App() {
       <section id="home" className="section hero-section">
         {/* Looping Background Video */}
         <div className="hero-video-bg">
-          <video src="/hero_header.mp4" autoPlay loop muted playsInline />
+          <video src="https://media.githubusercontent.com/media/donboone3/infinite-horizons-ta/master/public/hero_header.mp4" autoPlay loop muted playsInline />
           <div className="hero-video-overlay"></div>
         </div>
 
