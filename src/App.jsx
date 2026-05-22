@@ -99,25 +99,23 @@ export default function App() {
           </a>
 
           {/* Nav Menu */}
-          <ul className={`nav-menu ${mobileMenuOpen ? 'mobile-active' : ''}`} style={mobileMenuOpen ? {
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'absolute',
-            top: '70px',
-            left: 0,
-            width: '100%',
-            backgroundColor: 'rgba(7, 10, 19, 0.95)',
-            padding: '2rem',
-            borderBottom: '1px solid var(--border-color)',
-            zIndex: 999,
-            gap: '1.5rem'
-          } : {}}>
+          {/* Nav Menu */}
+          <ul className={`nav-menu ${mobileMenuOpen ? 'mobile-active' : ''}`}>
             <li><a href="#home" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</a></li>
             <li><a href="#services" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Solutions</a></li>
             <li><a href="#calculator" className="nav-link" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</a></li>
             <li><a href="#jobs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Job Board</a></li>
             <li><a href="#integrations" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Workflow</a></li>
             <li><a href="#contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact</a></li>
+            <li className="mobile-only-cta">
+              <button 
+                className="btn btn-primary btn-sm" 
+                style={{ width: '100%' }} 
+                onClick={() => { setMobileMenuOpen(false); openEmployerModal(); }}
+              >
+                Post a Role
+              </button>
+            </li>
           </ul>
 
           <div className="nav-actions">
@@ -138,18 +136,18 @@ export default function App() {
             </button>
 
             {/* Desktop CTA */}
-            <button className="btn btn-primary btn-sm" onClick={openEmployerModal}>
+            <button className="btn btn-primary btn-sm nav-cta-desktop" onClick={openEmployerModal}>
               Post a Role
             </button>
 
             {/* Mobile Menu Button */}
             <button 
               className="theme-toggle" 
-              style={{ display: 'none' }} /* Visible on mobile under CSS grid media queries */
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               id="mobile-nav-toggle"
+              aria-label="Toggle navigation menu"
             >
-              ☰
+              {mobileMenuOpen ? '✕' : '☰'}
             </button>
           </div>
         </div>
@@ -408,7 +406,7 @@ export default function App() {
 
         <div className="tools-grid">
           {/* Card 1: Calendly Booking */}
-          <div className="glass-card tool-card" style={{ gridColumn: 'span 2' }}>
+          <div className="glass-card tool-card tool-card-double">
             <span className="tool-tag">Calendly Automated Scheduling</span>
             <h3>Book a 30-Minute Talent Diagnostic Call</h3>
             <p style={{ margin: '0.25rem 0 1.5rem 0' }}>Select an available time slot below to coordinate with our lead acquisition specialist.</p>
@@ -529,10 +527,10 @@ export default function App() {
       {/* Main Contact Section */}
       <section id="contact" className="section" style={{ borderTop: '1px solid var(--border-color)', backgroundColor: 'rgba(7, 10, 19, 0.2)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="contact-grid">
             <div>
               <span className="section-tag">Let's Connect</span>
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Ready to Scale Your Recruiting?</h2>
+              <h2 className="contact-title">Ready to Scale Your Recruiting?</h2>
               <p style={{ fontSize: '1.05rem', marginBottom: '2rem' }}>
                 We provide premium placement, pre-screened talent, and flexible hiring trials. Connect with our principal recruiter today for a complimentary staffing analysis.
               </p>
@@ -555,7 +553,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="glass-card" style={{ padding: '3rem' }}>
+            <div className="glass-card contact-card-glass">
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Request Staffing Details</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>
                 Fill out the brief contact inquiry below and one of our client engagement representatives will follow up within 24 hours.
