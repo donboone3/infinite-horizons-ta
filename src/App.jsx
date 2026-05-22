@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import logoImg from './assets/logo.png';
 import HiringCalculator from './components/HiringCalculator';
-import JobBoard from './components/JobBoard';
 import Modal from './components/Modal';
 
 
@@ -12,8 +11,6 @@ export default function App() {
   
   // Modals state
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('employer'); // 'employer' | 'candidate'
-  const [selectedJob, setSelectedJob] = useState('');
 
   // Tool integrations state
   const [calendlyState, setCalendlyState] = useState('select-slot'); // 'select-slot' | 'confirmed'
@@ -60,15 +57,7 @@ export default function App() {
     }
   };
 
-  const openEmployerModal = () => {
-    setModalType('employer');
-    setSelectedJob('');
-    setModalOpen(true);
-  };
-
-  const openCandidateModal = (jobTitle) => {
-    setModalType('candidate');
-    setSelectedJob(jobTitle);
+  const openModal = () => {
     setModalOpen(true);
   };
 
@@ -104,14 +93,14 @@ export default function App() {
             <li><a href="#home" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</a></li>
             <li><a href="#services" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Solutions</a></li>
             <li><a href="#calculator" className="nav-link" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</a></li>
-            <li><a href="#jobs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Job Board</a></li>
+            <li><a href="#why-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Why Infinite Horizons</a></li>
             <li><a href="#integrations" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Workflow</a></li>
             <li><a href="#contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact</a></li>
             <li className="mobile-only-cta">
               <button 
                 className="btn btn-primary btn-sm" 
                 style={{ width: '100%' }} 
-                onClick={() => { setMobileMenuOpen(false); openEmployerModal(); }}
+                onClick={() => { setMobileMenuOpen(false); openModal(); }}
               >
                 Post a Role
               </button>
@@ -136,7 +125,7 @@ export default function App() {
             </button>
 
             {/* Desktop CTA */}
-            <button className="btn btn-primary btn-sm nav-cta-desktop" onClick={openEmployerModal}>
+            <button className="btn btn-primary btn-sm nav-cta-desktop" onClick={openModal}>
               Post a Role
             </button>
 
@@ -177,11 +166,11 @@ export default function App() {
             </p>
             
             <div className="hero-actions">
-              <button className="btn btn-accent" onClick={openEmployerModal}>
+              <button className="btn btn-accent" onClick={openModal}>
                 Hire Elite Talent
               </button>
-              <a href="#jobs" className="btn btn-secondary">
-                Explore Job Board
+              <a href="#why-us" className="btn btn-secondary">
+                Why Infinite Horizons
               </a>
             </div>
 
@@ -336,7 +325,7 @@ export default function App() {
                 <li className="service-feature-item"><span className="feature-check">✓</span> 90-day retention guarantee</li>
                 <li className="service-feature-item"><span className="feature-check">✓</span> Structured onboarding support</li>
               </ul>
-              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openEmployerModal}>
+              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openModal}>
                 Discuss Direct Hire
               </button>
             </div>
@@ -351,7 +340,7 @@ export default function App() {
                 <li className="service-feature-item"><span className="feature-check">✓</span> Seamless conversion process</li>
                 <li className="service-feature-item"><span className="feature-check">✓</span> Weekly check-ins</li>
               </ul>
-              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openEmployerModal}>
+              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openModal}>
                 Explore Contract Trial
               </button>
             </div>
@@ -366,7 +355,7 @@ export default function App() {
                 <li className="service-feature-item"><span className="feature-check">✓</span> Retention risk assessments</li>
                 <li className="service-feature-item"><span className="feature-check">✓</span> Custom hiring playbooks</li>
               </ul>
-              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openEmployerModal}>
+              <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={openModal}>
                 Request Intake Audit
               </button>
             </div>
@@ -384,15 +373,105 @@ export default function App() {
         <HiringCalculator />
       </section>
 
-      {/* Job Board Section */}
-      <section id="jobs" className="section" style={{ backgroundColor: 'rgba(254, 195, 17, 0.01)' }}>
-        <div className="container text-center">
-          <div className="section-header">
-            <span className="section-tag">Live Careers</span>
-            <h2 className="section-title">Open Opportunities</h2>
-            <p>We represent top-tier employers across the Midwest. Find your next role with career growth and competitive pay.</p>
+      {/* Hiring Pain Points & B2B Trust Section */}
+      <section id="why-us" className="section why-us-section" style={{ backgroundColor: 'rgba(254, 195, 17, 0.015)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        <div className="container">
+          <div className="section-header text-center" style={{ maxWidth: '800px', margin: '0 auto 50px' }}>
+            <span className="section-tag">Hiring Realities</span>
+            <h2 className="section-title">The Real Cost of Hiring Friction</h2>
+            <p className="section-subtitle">
+              For growing small businesses, talent acquisition is the single biggest bottleneck. Traditional recruiting processes drain focus, burn capital, and delay execution.
+            </p>
           </div>
-          <JobBoard onApply={openCandidateModal} />
+
+          {/* Grid of 4 Pain Points */}
+          <div className="pain-grid">
+            {/* Pain 1: Bandwidth Drain */}
+            <div className="glass-card pain-card">
+              <div className="pain-icon-wrapper">
+                <span className="pain-icon">⏰</span>
+              </div>
+              <div className="pain-content">
+                <div className="pain-badge">Bandwidth Drain</div>
+                <h3>Owner Acting as Recruiter</h3>
+                <p className="pain-metric">40+ Hours Lost Per Role</p>
+                <p className="pain-description">
+                  Small business owners waste weeks reviewing hundreds of low-intent resumes, chasing ghosts, and conducting first-round phone screens, pulling focus away from core operations and revenue growth.
+                </p>
+              </div>
+            </div>
+
+            {/* Pain 2: Bad Hire Risk */}
+            <div className="glass-card pain-card">
+              <div className="pain-icon-wrapper">
+                <span className="pain-icon">⚠️</span>
+              </div>
+              <div className="pain-content">
+                <div className="pain-badge danger">Turnover Penalty</div>
+                <h3>The $25,000 Bad Hire Cost</h3>
+                <p className="pain-metric">30% Salary Waste</p>
+                <p className="pain-description">
+                  Hiring the wrong operations manager, admin lead, or sales rep is catastrophic. Between training overhead, lost productivity, and severance, a single hiring mistake costs tens of thousands of dollars.
+                </p>
+              </div>
+            </div>
+
+            {/* Pain 3: Compensation Gap */}
+            <div className="glass-card pain-card">
+              <div className="pain-icon-wrapper">
+                <span className="pain-icon">📊</span>
+              </div>
+              <div className="pain-content">
+                <div className="pain-badge warning">Benefits Disadvantage</div>
+                <h3>The Compensation Gap</h3>
+                <p className="pain-metric">Corporate Competitiveness</p>
+                <p className="pain-description">
+                  Small businesses struggle to compete with massive corporate benefits and salary budgets. We help you reposition your roles to attract entrepreneurial, high-grit professionals who value growth over bureaucracy.
+                </p>
+              </div>
+            </div>
+
+            {/* Pain 4: Vacancy Bottleneck */}
+            <div className="glass-card pain-card">
+              <div className="pain-icon-wrapper">
+                <span className="pain-icon">⏳</span>
+              </div>
+              <div className="pain-content">
+                <div className="pain-badge info">Operational Delay</div>
+                <h3>The Vacancy Bottleneck</h3>
+                <p className="pain-metric">42+ Days to Fill</p>
+                <p className="pain-description">
+                  Leaving key positions vacant forces other team members to absorb the workload, leading to burnout, errors, and delayed project delivery. Our pre-vetted talent pipeline reduces time-to-hire by over 50%.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* B2B Trust Guarantee Row */}
+          <div className="glass-card trust-guarantee-card" style={{ marginTop: '3rem', padding: '2.5rem', border: '1px solid rgba(254, 195, 17, 0.3)', background: 'linear-gradient(135deg, rgba(15, 22, 42, 0.8) 0%, rgba(254, 195, 17, 0.03) 100%)' }}>
+            <div className="trust-grid">
+              <div className="trust-main-info">
+                <span className="trust-badge">Guaranteed Outcomes</span>
+                <h3>Protecting Your Bottom Line</h3>
+                <p>
+                  As a leading Midwest recruiting agency, we build trust through accountability. Our small business staffing solutions are structured to mitigate risk and guarantee alignment.
+                </p>
+                <div className="trust-guarantee-badge">
+                  <span className="gold-check">✓</span> <strong>90-Day Free Replacement Guarantee</strong>
+                </div>
+              </div>
+              <div className="trust-pillars">
+                <div className="trust-pillar">
+                  <h4>94% Retention Rate</h4>
+                  <p>Our placements stay long-term because we screen for both technical capability and small-business cultural alignment.</p>
+                </div>
+                <div className="trust-pillar">
+                  <h4>Elite Pre-Vetting</h4>
+                  <p>Every operations, admin, and sales candidate undergoes rigorous vetting before they reach your inbox.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -560,7 +639,7 @@ export default function App() {
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <button className="btn btn-primary" style={{ justifySelf: 'left' }} onClick={openEmployerModal}>
+                <button className="btn btn-primary" style={{ justifySelf: 'left' }} onClick={openModal}>
                   Submit Hiring Requirement Form
                 </button>
                 
@@ -598,11 +677,12 @@ export default function App() {
             </div>
 
             <div className="footer-col">
-              <h4>Careers</h4>
+              <h4>Why Us</h4>
               <ul className="footer-links">
-                <li><a href="#jobs" className="footer-link">Browse Jobs</a></li>
-                <li><a href="#jobs" className="footer-link">Submit Resume</a></li>
-                <li><a href="#jobs" className="footer-link">Compensation Guide</a></li>
+                <li><a href="#why-us" className="footer-link">Hiring Realities</a></li>
+                <li><a href="#services" className="footer-link">Our Capabilities</a></li>
+                <li><a href="#calculator" className="footer-link">ROI Calculator</a></li>
+                <li><a href="#integrations" className="footer-link">Workflow Diagnostic</a></li>
               </ul>
             </div>
 
@@ -636,8 +716,6 @@ export default function App() {
       <Modal 
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 
-        type={modalType} 
-        jobTitle={selectedJob} 
       />
     </>
   );
