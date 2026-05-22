@@ -12,6 +12,18 @@ export default function App() {
   // Modals state
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Routing and B2B Funnel states
+  const [view, setView] = useState('home'); // 'home' | 'partner'
+  const [funnelFormData, setFunnelFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    roleNeed: 'Operations Coordinator',
+    timeline: 'Immediate'
+  });
+  const [funnelSubmitted, setFunnelSubmitted] = useState(false);
+
   // Tool integrations state
   const [calendlyState, setCalendlyState] = useState('select-slot'); // 'select-slot' | 'confirmed'
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
@@ -61,6 +73,27 @@ export default function App() {
     setModalOpen(true);
   };
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#/partner' || window.location.hash === '#/grow') {
+        setView('partner');
+        window.scrollTo(0, 0);
+      } else {
+        setView('home');
+      }
+    };
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleFunnelSubmit = (e) => {
+    e.preventDefault();
+    setFunnelSubmitted(true);
+    // Meta Ads Pixel Event Mock
+    console.log("Meta Pixel Event: fbq('track', 'Lead', { content_name: '" + funnelFormData.roleNeed + "', company_name: '" + funnelFormData.company + "' });");
+  };
+
   const handleTallySubmit = (e) => {
     e.preventDefault();
     setTallySubmitted(true);
@@ -70,6 +103,291 @@ export default function App() {
     setSelectedTimeSlot(time);
     setCalendlyState('confirmed');
   };
+
+  if (view === 'partner') {
+    return (
+      <>
+        {/* Background Glow Elements */}
+        <div className="bg-glow-1"></div>
+        <div className="bg-glow-2"></div>
+
+        {/* Simplified Header for Funnel Page */}
+        <header className="header scrolled">
+          <div className="container nav-container" style={{ justifyContent: 'space-between' }}>
+            <a href="#" className="logo-wrapper" onClick={(e) => { e.preventDefault(); window.location.hash = ''; }}>
+              <img src={logoImg} alt="Infinite Horizons Logo" className="logo-img" />
+              <span className="logo-text">Infinite Horizons</span>
+            </a>
+            <a href="#" className="btn btn-secondary btn-sm" onClick={(e) => { e.preventDefault(); window.location.hash = ''; }}>
+              ← Back to Main Site
+            </a>
+          </div>
+        </header>
+
+        {/* Funnel Page Content */}
+        <main className="funnel-page" style={{ paddingTop: '130px', paddingBottom: '80px' }}>
+          <div className="container">
+            <div className="funnel-hero-grid">
+              
+              {/* Left Column: B2B Offer Details */}
+              <div className="funnel-hero-copy">
+                <div className="section-tag" style={{ width: 'max-content', marginBottom: '1rem' }}>Elite Staffing Partner</div>
+                <h1 className="funnel-hero-title">
+                  Build a High-Performing Operation With <span className="gradient-text">Vetted Midwest Talent</span>
+                </h1>
+                <p className="funnel-hero-desc">
+                  We eliminate the overhead of candidate screening. Partner with us to secure top-tier operations, finance, admin, and sales professionals in under 17 days. 100% risk-free.
+                </p>
+
+                {/* Bullet list of trust points */}
+                <div className="funnel-benefits-list">
+                  <div className="funnel-benefit-item">
+                    <span className="benefit-icon">⚡</span>
+                    <div>
+                      <h4>17-Day Average Fill Time</h4>
+                      <p>Skip the wait. Our active regional network lets us introduce highly-qualified candidates in record time.</p>
+                    </div>
+                  </div>
+                  <div className="funnel-benefit-item">
+                    <span className="benefit-icon">🛡️</span>
+                    <div>
+                      <h4>90-Day Free Replacement Guarantee</h4>
+                      <p>We stand behind our vetting. If your new hire doesn't work out within 90 days, we'll replace them at zero extra cost.</p>
+                    </div>
+                  </div>
+                  <div className="funnel-benefit-item">
+                    <span className="benefit-icon">🎯</span>
+                    <div>
+                      <h4>Rigorous Pre-Screening</h4>
+                      <p>Every candidate passes comprehensive skill assessments and integrity checks before you meet them.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Review Badge */}
+                <div className="funnel-trust-row">
+                  <div className="trust-metric-box">
+                    <div className="trust-val">94%</div>
+                    <div className="trust-lbl">1-Year Retention</div>
+                  </div>
+                  <div className="trust-metric-box">
+                    <div className="trust-val">4.9/5</div>
+                    <div className="trust-lbl">Owner Rating</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Lead Form Card */}
+              <div className="funnel-form-wrapper">
+                <div className="glass-card funnel-form-card">
+                  {funnelSubmitted ? (
+                    <div className="funnel-form-success text-center" style={{ padding: '2.5rem 1rem' }}>
+                      <div className="success-icon-ring" style={{ margin: '0 auto 1.5rem' }}>
+                        <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                          <circle className="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                          <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                      </div>
+                      <h3>Staffing Discovery Scheduled!</h3>
+                      <p style={{ margin: '1rem 0 1.5rem 0', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                        Thank you, <strong>{funnelFormData.name}</strong>. We've received your inquiry regarding <strong>{funnelFormData.roleNeed}</strong> needs at <strong>{funnelFormData.company}</strong>.
+                      </p>
+                      <div style={{ padding: '1rem', background: 'rgba(254, 195, 17, 0.05)', border: '1px solid rgba(254, 195, 17, 0.2)', borderRadius: '8px', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1.5rem', textAlign: 'left' }}>
+                        <strong>Meta Ads Pixel Event Fired:</strong>
+                        <code style={{ display: 'block', marginTop: '0.25rem', fontFamily: 'monospace', color: 'var(--color-secondary)' }}>
+                          fbq('track', 'Lead', &#123; role: '{funnelFormData.roleNeed}', company: '{funnelFormData.company}' &#125;);
+                        </code>
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                        A senior talent partner will review your requirements and call you at <strong>{funnelFormData.phone}</strong> within 12 hours.
+                      </p>
+                      <button 
+                        className="btn btn-secondary btn-sm" 
+                        style={{ marginTop: '1.5rem', width: '100%' }}
+                        onClick={() => {
+                          setFunnelFormData({ name: '', email: '', phone: '', company: '', roleNeed: 'Operations Coordinator', timeline: 'Immediate' });
+                          setFunnelSubmitted(false);
+                        }}
+                      >
+                        Submit Another Request
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleFunnelSubmit}>
+                      <h3>Get Pre-Vetted Candidates</h3>
+                      <p className="form-subtitle">Tell us about your operations or admin needs. We'll present matches in 48 hours.</p>
+
+                      <div className="form-group">
+                        <label htmlFor="funnel-name">Full Name *</label>
+                        <input
+                          id="funnel-name"
+                          type="text"
+                          required
+                          value={funnelFormData.name}
+                          onChange={(e) => setFunnelFormData(prev => ({ ...prev, name: e.target.value }))}
+                          className="form-input"
+                          placeholder="John Doe"
+                        />
+                      </div>
+
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label htmlFor="funnel-email">Business Email *</label>
+                          <input
+                            id="funnel-email"
+                            type="email"
+                            required
+                            value={funnelFormData.email}
+                            onChange={(e) => setFunnelFormData(prev => ({ ...prev, email: e.target.value }))}
+                            className="form-input"
+                            placeholder="john@company.com"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="funnel-phone">Phone Number *</label>
+                          <input
+                            id="funnel-phone"
+                            type="tel"
+                            required
+                            value={funnelFormData.phone}
+                            onChange={(e) => setFunnelFormData(prev => ({ ...prev, phone: e.target.value }))}
+                            className="form-input"
+                            placeholder="(555) 123-4567"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label htmlFor="funnel-company">Company Name *</label>
+                          <input
+                            id="funnel-company"
+                            type="text"
+                            required
+                            value={funnelFormData.company}
+                            onChange={(e) => setFunnelFormData(prev => ({ ...prev, company: e.target.value }))}
+                            className="form-input"
+                            placeholder="Acme Corp"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="funnel-role">Role Needed *</label>
+                          <select
+                            id="funnel-role"
+                            value={funnelFormData.roleNeed}
+                            onChange={(e) => setFunnelFormData(prev => ({ ...prev, roleNeed: e.target.value }))}
+                            className="form-input"
+                            style={{ background: 'var(--bg-input)', color: 'var(--text-heading)', height: '42px', padding: '0 0.75rem' }}
+                          >
+                            <option value="Operations Coordinator">Operations Manager / Coord.</option>
+                            <option value="Executive Assistant">Executive / Admin Assistant</option>
+                            <option value="Sales / Account Executive">Sales Rep / Account Mgr</option>
+                            <option value="Finance & Accounting">Finance / Bookkeeper</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Target Hiring Timeline</label>
+                        <div className="timeline-selector" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                          {['Immediate', '1-2 Months', 'Planning'].map((t) => (
+                            <button
+                              key={t}
+                              type="button"
+                              className={`need-badge ${funnelFormData.timeline === t ? 'active' : ''}`}
+                              onClick={() => setFunnelFormData(prev => ({ ...prev, timeline: t }))}
+                              style={{ width: '100%', fontSize: '0.75rem', padding: '0.5rem' }}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button type="submit" className="btn btn-accent" style={{ width: '100%', fontSize: '1rem', padding: '0.85rem' }}>
+                        Get Vetted Talent Options
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* How It Works Section */}
+            <div className="funnel-process-section" style={{ marginTop: '5rem', borderTop: '1px solid var(--border-color)', paddingTop: '4rem' }}>
+              <div className="section-header text-center" style={{ maxWidth: '600px', margin: '0 auto 3rem' }}>
+                <span className="section-tag">How It Works</span>
+                <h2 className="section-title" style={{ fontSize: '2rem' }}>Our Rigorous 4-Step Pipeline</h2>
+                <p>We source and screen so you only interview the absolute best.</p>
+              </div>
+
+              <div className="process-timeline-grid">
+                <div className="process-step">
+                  <div className="step-num">01</div>
+                  <h4>Diagnostic Mapping</h4>
+                  <p>We analyze your operating structure, tools, and local salary benchmarks to build a profile of the ideal hire.</p>
+                </div>
+                <div className="process-step">
+                  <div className="step-num">02</div>
+                  <h4>Active Midwest Sourcing</h4>
+                  <p>We leverage our vetted databases and target local Operations channels to discover passive specialists.</p>
+                </div>
+                <div className="process-step">
+                  <div className="step-num">03</div>
+                  <h4>Skills & Grit Testing</h4>
+                  <p>Every candidate undergoes detailed assessments measuring software fluency, administrative competence, and alignment.</p>
+                </div>
+                <div className="process-step">
+                  <div className="step-num">04</div>
+                  <h4>Onboarded Placement</h4>
+                  <p>We present the top 2-3 pre-screened options, arrange panels, and support onboarding with a 90-day guarantee.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Placement Guarantee Row */}
+            <div className="glass-card trust-guarantee-card" style={{ marginTop: '4rem', padding: '2.5rem', border: '1px solid rgba(254, 195, 17, 0.3)', background: 'linear-gradient(135deg, rgba(15, 22, 42, 0.8) 0%, rgba(254, 195, 17, 0.03) 100%)' }}>
+              <div className="trust-grid">
+                <div className="trust-main-info">
+                  <span className="trust-badge">Replacement Protection</span>
+                  <h3>Our 90-Day Performance Promise</h3>
+                  <p style={{ margin: '0 0 1.5rem 0' }}>
+                    Recruiting carries risks—unless you partner with Infinite Horizons. We absorb the uncertainty so you can scale with confidence.
+                  </p>
+                  <div className="trust-guarantee-badge">
+                    <span className="gold-check">✓</span> <strong>Zero placement replacement fee for the first 90 days.</strong>
+                  </div>
+                </div>
+                <div className="trust-pillars">
+                  <div className="trust-pillar">
+                    <h4>Direct Compensation Vetting</h4>
+                    <p>We align client salary parameters with local realities so that candidates stay committed long-term.</p>
+                  </div>
+                  <div className="trust-pillar">
+                    <h4>Pre-tested Competency</h4>
+                    <p>No training delays. Candidates hit the ground running with direct proficiency in modern cloud systems.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Simplified Footer */}
+        <footer className="footer" style={{ borderTop: '1px solid var(--border-color)' }}>
+          <div className="container text-center" style={{ padding: '2rem 0' }}>
+            <div className="logo-wrapper" style={{ justifyContent: 'center', marginBottom: '1rem' }}>
+              <img src={logoImg} alt="Infinite Horizons Logo" className="logo-img" />
+              <span className="logo-text">Infinite Horizons</span>
+            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              © {new Date().getFullYear()} Infinite Horizons Talent Acquisition. Mock Design Setup. All Rights Reserved.
+            </p>
+          </div>
+        </footer>
+      </>
+    );
+  }
 
   return (
     <>
@@ -100,9 +418,9 @@ export default function App() {
               <button 
                 className="btn btn-primary btn-sm" 
                 style={{ width: '100%' }} 
-                onClick={() => { setMobileMenuOpen(false); openModal(); }}
+                onClick={() => { setMobileMenuOpen(false); window.location.hash = '#/partner'; }}
               >
-                Post a Role
+                Hire Talent
               </button>
             </li>
           </ul>
@@ -125,8 +443,8 @@ export default function App() {
             </button>
 
             {/* Desktop CTA */}
-            <button className="btn btn-primary btn-sm nav-cta-desktop" onClick={openModal}>
-              Post a Role
+            <button className="btn btn-primary btn-sm nav-cta-desktop" onClick={() => window.location.hash = '#/partner'}>
+              Hire Talent
             </button>
 
             {/* Mobile Menu Button */}

@@ -1924,3 +1924,238 @@ p {
   margin: 0;
 }
 
+/* ==========================================================================
+   B2B Funnel Page Styles
+   ========================================================================== */
+.funnel-page {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.funnel-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.funnel-hero-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.funnel-hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 1.5rem;
+  color: var(--text-heading);
+}
+
+.funnel-hero-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+.funnel-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.funnel-benefit-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.benefit-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 61, 239, 0.1);
+  border: 1px solid rgba(2, 61, 239, 0.2);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.light-theme .benefit-icon {
+  background: rgba(2, 61, 239, 0.05);
+  border-color: rgba(2, 61, 239, 0.15);
+}
+
+.funnel-benefit-item h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-heading);
+}
+
+.funnel-benefit-item p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.funnel-trust-row {
+  display: flex;
+  gap: 2rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.trust-metric-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.trust-val {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.light-theme .trust-val {
+  color: var(--color-primary);
+}
+
+.trust-lbl {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.funnel-form-wrapper {
+  position: sticky;
+  top: 100px;
+}
+
+.funnel-form-card {
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+}
+
+.funnel-form-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.funnel-form-card p.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.funnel-form-success {
+  text-align: center;
+}
+
+/* Timeline Selector buttons inside the funnel form */
+.timeline-selector .need-badge {
+  padding: 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Process Timeline (How it works) */
+.process-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.process-step {
+  position: relative;
+  padding: 1.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-normal), border-color var(--transition-normal);
+}
+
+.process-step:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+.step-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(2, 61, 239, 0.15);
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.process-step h4 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-heading);
+}
+
+.process-step p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* Responsive styles for B2B Funnel Page */
+@media (max-width: 992px) {
+  .funnel-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .funnel-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .process-timeline-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .funnel-form-wrapper {
+    position: static;
+  }
+}
+
+@media (max-width: 576px) {
+  .funnel-hero-title {
+    font-size: 2rem;
+  }
+
+  .funnel-form-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .process-timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .funnel-trust-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
